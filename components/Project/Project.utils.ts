@@ -1,4 +1,4 @@
-import type { Project, ValidationResult } from "./Project.types";
+import type { ProjectData, ValidationResult } from "./Project.types";
 
 const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
 
@@ -75,7 +75,7 @@ export function validateProjectInput(raw: unknown): ValidationResult {
 }
 
 /** Featured first, then newest first. */
-export function sortProjects(list: Project[]): Project[] {
+export function sortProjects(list: ProjectData[]): ProjectData[] {
   return [...list].sort((a, b) => {
     if (a.featured !== b.featured) return a.featured ? -1 : 1;
     return b.createdAt.localeCompare(a.createdAt);

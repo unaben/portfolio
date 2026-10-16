@@ -1,40 +1,111 @@
-import { describe, expect, it } from 'vitest';
-import { parseStack, sortProjects, validateProjectInput } from './Project.utils';
-import type { Project } from './Project.types';
+import { describe, expect, it } from "vitest";
+import {
+  parseStack,
+  sortProjects,
+  validateProjectInput,
+} from "./Project.utils";
+import type { ProjectData } from "./Project.types";
 
-const base = { title: 'A', summary: 'B', stack: [], featured: false };
-const mk = (id: string, featured: boolean, createdAt: string): Project => ({
-  ...base, id, featured, createdAt, updatedAt: createdAt,
-});
+const baseProjectFields = {
+  title: "Project title",
+  summary: "Project summary",
+  stack: [],
+  featured: false,
+};
 
-describe('parseStack', () => {
-  it('trims, drops empties and dedupes', () => {
-    expect(parseStack(' React, Next.js,, React ')).toEqual(['React', 'Next.js']);
-  });
-});
+function buildProject(
+  id: string,
+  featured: boolean,
+  createdAt: string,
+): ProjectData {
+  return {
+    ...baseProjectFields,
+    id,
+    featured,
+    createdAt,
+    updatedAt: createdAt,
+  };
+}
 
-describe('validateProjectInput', () => {
-  it('accepts a minimal valid project', () => {
-    const r = validateProjectInput({ title: 'T', summary: 'S' });
-    expect(r.ok).toBe(true);
-    if (r.ok) expect(r.value).toMatchObject({ title: 'T', stack: [], featured: false });
-  });
-  it('rejects missing fields and bad URLs', () => {
-    const r = validateProjectInput({ title: '', summary: '', liveUrl: 'javascript:alert(1)' });
-    expect(r.ok).toBe(false);
-    if (!r.ok) expect(r.errors).toHaveLength(3);
-  });
-  it('accepts a comma string or array for stack', () => {
-    const a = validateProjectInput({ title: 'T', summary: 'S', stack: 'a, b' });
-    const b = validateProjectInput({ title: 'T', summary: 'S', stack: ['a', 'b'] });
-    expect(a.ok && a.value.stack).toEqual(['a', 'b']);
-    expect(b.ok && b.value.stack).toEqual(['a', 'b']);
-  });
-});
+describe("project utils", () => {
+  describe("parseStack", () => {
+    it("trims, drops empties and dedupes", () => {
+      const parsedStack = parseStack(" React, Next.js,, React ");
 
-describe('sortProjects', () => {
-  it('puts featured first, then newest', () => {
-    const out = sortProjects([mk('old', false, '2026-01-01'), mk('new', false, '2026-02-01'), mk('feat', true, '2025-01-01')]);
-    expect(out.map((p) => p.id)).toEqual(['feat', 'new', 'old']);
+      expect(parsedStack).toEqual(["React", "Next.js"]);
+    });
+  });
+
+  describe("validateProjectInput", () => {
+    it("accepts a minimal valid project", () => {
+      const validationResult = validateProjectInput({
+        title: "Portfolio",
+        summary: "My portfolio site",
+      });
+
+      expect(validationResult.ok).toBe(true);
+      if (validationResult.ok) {
+        expect(validationResult.value).toMatchObject({
+          title: "Portfolio",
+          stack: [],
+          featured: false,
+        });
+      }
+    });
+
+    it("rejects missing fields and bad URLs", () => {
+      const validationResult = validateProjectInput({
+        title: "",
+        summary: "",
+        liveUrl: "javascript:alert(1)",
+      });
+
+      expect(validationResult.ok).toBe(false);
+      if (!validationResult.ok) {
+        expect(validationResult.errors).toHaveLength(3);
+      }
+    });
+
+    it("accepts a comma string or array for stack", () => {
+      const resultFromString = validateProjectInput({
+        title: "Portfolio",
+        summary: "My portfolio site",
+        stack: "react, next",
+      });
+      const resultFromArray = validateProjectInput({
+        title: "Portfolio",
+        summary: "My portfolio site",
+        stack: ["react", "next"],
+      });
+
+      expect(resultFromString.ok && resultFromString.value.stack).toEqual([
+        "react",
+        "next",
+      ]);
+      expect(resultFromArray.ok && resultFromArray.value.stack).toEqual([
+        "react",
+        "next",
+      ]);
+    });
+  });
+
+  describe("sortProjects", () => {
+    it("puts featured first, then newest", () => {
+      const olderProject = buildProject("older", false, "2026-01-01");
+      const newerProject = buildProject("newer", false, "2026-02-01");
+      const featuredProject = buildProject("featured", true, "2025-01-01");
+
+      const sortedProjects = sortProjects([
+        olderProject,
+        newerProject,
+        featuredProject,
+      ]);
+
+      expect(sortedProjects.map((project) => project.id)).toEqual([
+        "featured",
+        "newer",
+        "older",
+      ]);
+    });
   });
 });

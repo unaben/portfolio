@@ -1,4 +1,4 @@
-export interface Project {
+export interface ProjectData {
   id: string;
   title: string;
   summary: string;
@@ -12,8 +12,13 @@ export interface Project {
   updatedAt: string;
 }
 
-export type ProjectInput = Omit<Project, 'id' | 'createdAt' | 'updatedAt'>;
+export type ProjectInput = Omit<ProjectData, "id" | "createdAt" | "updatedAt">;
 
 export type ValidationResult =
   | { ok: true; value: ProjectInput }
   | { ok: false; errors: string[] };
+
+export interface ProjectProps {
+  project: ProjectData;
+  className?: string;
+}

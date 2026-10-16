@@ -1,12 +1,7 @@
 import cx from "classnames";
 import Link from "next/link";
-import type { Project } from "./Project.types";
+import type { ProjectProps } from "./Project.types";
 import styles from "./Project.module.css";
-
-interface ProjectProps {
-  project: Project;
-  className?: string;
-}
 
 export function ProjectItem({ project, className }: ProjectProps) {
   const {
@@ -19,6 +14,7 @@ export function ProjectItem({ project, className }: ProjectProps) {
     screenshot,
     featured,
   } = project;
+
   return (
     <article
       className={cx(styles.item, { [styles.featured]: featured }, className)}
@@ -30,7 +26,7 @@ export function ProjectItem({ project, className }: ProjectProps) {
           <span>No screenshot</span>
         )}
       </div>
-      <div className={styles.body}>
+      <div className={styles.main}>
         <h3 className={styles.title}>{title}</h3>
         {role && <p className={styles.role}>{role}</p>}
         <p className={styles.summary}>{summary}</p>
