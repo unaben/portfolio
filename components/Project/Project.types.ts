@@ -1,0 +1,19 @@
+export interface Project {
+  id: string;
+  title: string;
+  summary: string;
+  role?: string;
+  stack: string[];
+  liveUrl?: string;
+  repoUrl?: string;
+  screenshot?: string;
+  featured: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type ProjectInput = Omit<Project, 'id' | 'createdAt' | 'updatedAt'>;
+
+export type ValidationResult =
+  | { ok: true; value: ProjectInput }
+  | { ok: false; errors: string[] };
