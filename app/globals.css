@@ -4,7 +4,7 @@
   --ink: #101418;
   --muted: #5a626b;
   --line: #cdd2cf;
-  --accent: #1f4fd8;
+  --accent: #2f6f5e;
   --danger: #b3261e;
 }
 
@@ -15,7 +15,7 @@
     --ink: #e9ecea;
     --muted: #99a1a8;
     --line: #2a3137;
-    --accent: #8fa8ff;
+    --accent: #7fc4ae;
     --danger: #ff8a80;
   }
 }
@@ -38,7 +38,15 @@ body {
 }
 
 a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.15s ease, color 0.15s ease;
+}
+a:hover {
   color: var(--accent);
+  text-decoration-color: var(--accent);
 }
 
 a:focus-visible,
@@ -50,7 +58,7 @@ textarea:focus-visible {
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
 }

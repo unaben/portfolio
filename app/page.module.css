@@ -1,0 +1,60 @@
+.hero {
+  padding: 6rem 0 1.625rem;
+}
+
+.name {
+  margin: 0;
+  font-size: clamp(3rem, 11vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  font-weight: 800;
+}
+
+.role {
+  margin: 1.25rem 0 0;
+  font-size: 1.2rem;
+}
+
+.intro {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+.heading {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.empty {
+  padding: 2rem 0;
+  color: var(--muted);
+  border-top: 0.0625rem solid var(--line);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+  gap: 2rem 1.75rem;
+  grid-auto-flow: dense;
+  padding-top: 1rem;
+  border-top: 0.0625rem solid var(--line);
+}
+
+.footer {
+  margin-top: 4rem;
+  padding: 3rem 0 4rem;
+  border-top: 0.0625rem solid var(--line);
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.footerLink::after {
+  content: " ↗";
+  font-size: 0.85em;
+}

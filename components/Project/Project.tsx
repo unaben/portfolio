@@ -15,15 +15,29 @@ export function ProjectItem({ project, className }: ProjectProps) {
     featured,
   } = project;
 
+  const mediaContent = screenshot ? (
+    <img src={screenshot} alt={`Screenshot of ${title}`} loading="lazy" />
+  ) : (
+    <span>No screenshot</span>
+  );
+
   return (
     <article
       className={cx(styles.item, { [styles.featured]: featured }, className)}
     >
       <div className={cx(styles.media, { [styles.empty]: !screenshot })}>
-        {screenshot ? (
-          <img src={screenshot} alt={`Screenshot of ${title}`} loading="lazy" />
+        {liveUrl ? (
+          <Link
+            href={liveUrl}
+            target="_blank"
+            rel="noreferrer"
+            className={styles.mediaLink}
+            aria-label={`Open ${title} live site`}
+          >
+            {mediaContent}
+          </Link>
         ) : (
-          <span>No screenshot</span>
+          mediaContent
         )}
       </div>
       <div className={styles.main}>

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "vitest run"
+    "test": "vitest run",
+    "gen:types": "supabase gen types typescript --project-id fvcmhkbsyspuemxxthcz > lib/repo/database.types.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.3",
