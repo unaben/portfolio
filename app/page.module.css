@@ -39,7 +39,7 @@
   grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
   gap: 2rem 1.75rem;
   grid-auto-flow: dense;
-  padding-top: 1rem;
+  padding-top: 2rem;
   border-top: 0.0625rem solid var(--line);
 }
 
